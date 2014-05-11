@@ -52,7 +52,7 @@ hi def link juliaStatement Statement
 
 " misc
 syn keyword juliaDeclaration const
-syn match juliaComprehensionPrefix ".*\S.*for" contains=juliaComprehensionFor
+syn match juliaComprehensionPrefix "[A-Za-z0-9()].*for" contains=ALL
 syn keyword juliaComprehensionFor for contained
 
 hi def link juliaDeclaration Keyword
