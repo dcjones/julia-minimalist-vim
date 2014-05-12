@@ -24,6 +24,12 @@ syn region juliaModuleBlock transparent matchgroup=juliaModule start="\<module\>
 hi def link juliaModule Structure
 
 
+" Misc. blocks
+syn region juliaMiscBlockBlock transparent matchgroup=juliaMiscBlock start="\<\%(do\|begin\|let\)\>" end="\<end\>" contains=ALL
+
+hi def link juliaMiscBlock Repeat
+
+
 " Repeat
 syn region juliaRepeatBlock transparent matchgroup=juliaRepeat start="^\s*\<\%(while\|for\)\>" end="\<end\>" contains=ALL
 
