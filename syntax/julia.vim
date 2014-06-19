@@ -29,15 +29,18 @@ syn region juliaMiscBlockBlock transparent matchgroup=juliaMiscBlock start="\<\%
 
 hi def link juliaMiscBlock Repeat
 
+" Braces and Brackets
+syn region juliaBracketsBlock matchgroup=juliaBrackets start='\[' end='\]' contains=ALLBUT,juliaRepeatBlock contained
+syn region juliaBracesBlock matchgroup=juliaBraces start='{' end='}' contains=ALLBUT,juliaRepeatBlock contained
 
 " Repeat
-syn region juliaRepeatBlock transparent matchgroup=juliaRepeat start="^\s*\<\%(while\|for\)\>" end="\<end\>" contains=ALL
+syn region juliaRepeatBlock transparent matchgroup=juliaRepeat start="\<\%(while\|for\)\>" end="\<end\>" contains=@juliaTop
 
 hi def link juliaRepeat    Repeat
 
 " Conditional
 syn keyword juliaElse else elseif
-syn region  juliaIfBlock transparent matchgroup=juliaIf start="\<if\>" end="\<end\>" contains=ALL
+syn region  juliaIfBlock transparent matchgroup=juliaIf start="\<if\>" end="\<end\>" contains=@juliaTop
 
 hi def link juliaElse Conditional
 hi def link juliaIf   Conditional
@@ -45,7 +48,7 @@ hi def link juliaIf   Conditional
 
 " try catch end
 syn keyword juliaCatch    catch contained
-syn region  juliaTryBlock transparent matchgroup=juliaTry start="\<try\>" end="\<end\>" contains=ALL
+syn region  juliaTryBlock transparent matchgroup=juliaTry start="\<try\>" end="\<end\>" contains=@juliaTop
 
 hi def link juliaTry Exception
 hi def link juliaCatch Exception
@@ -57,9 +60,8 @@ syn keyword juliaStatement return continue break
 hi def link juliaStatement Statement
 
 " misc
-syn keyword juliaDeclaration const
-syn match juliaComprehensionPrefix "[A-Za-z0-9()].*for" contains=ALL
-syn keyword juliaComprehensionFor for contained
+syn keyword juliaDeclaration const global local
+syn keyword juliaComprehensionFor for
 
 hi def link juliaDeclaration Keyword
 hi def link juliaComprehensionFor Keyword
@@ -71,6 +73,7 @@ syn keyword juliaType Float Float16 Float32 Float64
 syn keyword juliaType AbstractArray AbstractMatrix AbstractVector Array Vector Matrix
 syn keyword juliaType String ByteString UTF8String SubString
 syn keyword juliaType Bool Nothing Union Type
+
 
 hi def link juliaType Type
 
@@ -95,7 +98,7 @@ hi def link juliaCharacter     Character
 
 
 " Functions
-syn region juliaFunctionBlock transparent matchgroup=juliaFunction start="\<\%\(function\|macro\)\>" end="\<end\>" contains=ALL
+syn region juliaFunctionBlock transparent matchgroup=juliaFunction start="\<\%\(function\|macro\)\>" end="\<end\>" contains=@juliaTop
 hi def link juliaFunction Function
 
 
@@ -107,9 +110,11 @@ syn match juliaNumber "\<0\o\+\>"
 syn match juliaFloat "\<\d\+\.\d*\([Ee][-+]\d\+\)\?\>"
 syn match juliaFloat "\<\.\d\+\([Ee][-+]\d\+\)\?\>"
 syn match juliaFloat "\<\d\+[Ee][-+]\d\+\>"
+syn keyword juliaFloatSpecial NaN Inf
 
 hi def link juliaNumber Number
 hi def link juliaFloat Float
+hi def link juliaFloatSpecial Float
 
 
 " Operators
@@ -121,11 +126,19 @@ hi def link juliaIn Operator
 syn keyword juliaBool true false nothing
 hi def link juliaBool Boolean
 
+syn keyword juliaIdentifierSpecial STDOUT, STDIN, STDERR
+
+hi def link juliaIdentifierSpecial Identifier
+
 
 " Macros
 syn match juliaMacro display "@[_[:alpha:]][_[:alnum:]!]*\%(\.[_[:alpha:]][_[:alnum:]!]*\)*"
 
 hi def link juliaMacro Macro
+
+
+syn cluster juliaTop contains=ALLBUT,juliaComprehensionFor
+
 
 let b:current_syntax = "julia"
 
