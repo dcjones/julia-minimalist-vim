@@ -25,7 +25,7 @@ hi def link juliaModule Structure
 
 
 " Misc. blocks
-syn region juliaMiscBlockBlock transparent matchgroup=juliaMiscBlock start="\<\%(do\|begin\|let\)\>" end="\<end\>" contains=ALL
+syn region juliaMiscBlockBlock transparent matchgroup=juliaMiscBlock start="\<\%(quote\|do\|begin\|let\)\>" end="\<end\>" contains=ALL
 
 hi def link juliaMiscBlock Repeat
 
@@ -138,6 +138,10 @@ hi def link juliaMacro Macro
 
 
 syn cluster juliaTop contains=ALLBUT,juliaComprehensionFor
+
+" Ragel
+syn include @ragel syntax/ragel.vim
+syn region ragelLine  start="%%" end="$" contains=@ragel
 
 
 let b:current_syntax = "julia"
